@@ -33,16 +33,6 @@ export default function Home() {
   //   alert("User created!!");
   // };
 
-  if (!database) {
-    return (
-      <div className="container">
-        <main>
-          <h1 className="title">carregando...</h1>
-        </main>
-      </div>
-    );
-  }
-
   return (
     <div className="container">
       <Head>
@@ -55,31 +45,19 @@ export default function Home() {
         <p className="description">
           Seus mangás preferidos na palma da sua mão!
         </p>
-        <a href={database?.latest?.link} download>
-          <img
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH}/img/manga-xpress-logo.png`}
-            alt="Logo Mangá Xpress"
-            width={240}
-          />
-        </a>
-        <a href={database?.latest?.link} download>
-          Baixar a versão {database?.latest?.version}
-        </a>
-        {/* <p className="description">Fill in your credentials to get started</p>
-
-        <p className="description">
-          Cloud Firestore Security Rules write permissions are required for
-          adding users
-        </p>
-        <button onClick={createUser}>Create 'nextjs_user'</button>
-
-        <p className="description">
-          Please press the link below after adding the user
-        </p>
-        <Link href={`/profile/${profile.username}`} passHref legacyBehavior>
-          <a>Go to SSR Page</a>
-        </Link> */}
+        <img
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH}/img/manga-xpress-logo.png`}
+          alt="Logo Mangá Xpress"
+          width={240}
+        />
       </main>
+      <footer>
+        <a href={database?.latest?.link} download>
+          {isLoading || !database
+            ? "carregando..."
+            : `Baixar a versão ${database?.latest?.version} para Android`}
+        </a>
+      </footer>
 
       <style jsx>{`
         .container {
@@ -89,21 +67,26 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background-color: #091013;
         }
 
         main {
-          padding: 5rem 0;
-          flex: 1;
+          /* padding: 2rem 0; */
+          /* flex: 1; */
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
         }
 
+        a {
+          color: #eaeaea;
+          font-size: 1.5em;
+        }
+
         footer {
           width: 100%;
           height: 100px;
-          border-top: 1px solid #eaeaea;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -114,6 +97,9 @@ export default function Home() {
         }
 
         footer a {
+          color: #eaeaea !important;
+          font-size: 1.5em;
+          text-align: center;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -122,22 +108,6 @@ export default function Home() {
         button {
           font-size: 1.5em;
           margin: 1em 0;
-        }
-
-        a {
-          color: blue;
-          font-size: 1.5em;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
         }
 
         .title {
@@ -149,20 +119,12 @@ export default function Home() {
         .title,
         .description {
           text-align: center;
+          color: #fff;
         }
 
         .description {
           line-height: 1.5;
           font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
 
         .grid {
