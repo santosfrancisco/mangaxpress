@@ -57,7 +57,7 @@ export default function Home() {
         </p>
         <a href={database?.latest?.link} download>
           <img
-            src="/img/manga-xpress-logo.png"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH}/img/manga-xpress-logo.png`}
             alt="Logo Mangá Xpress"
             width={240}
           />
