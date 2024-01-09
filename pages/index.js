@@ -1,40 +1,71 @@
-import { getFirestore, setDoc, doc } from 'firebase/firestore'
-import Head from 'next/head'
-import Link from 'next/link'
-import { useEffect } from 'react'
-import { useUser } from '../context/userContext'
+// import { getFirestore, setDoc, doc } from "firebase/firestore";
+import Head from "next/head";
+// import Link from "next/link";
+import { useEffect } from "react";
+import { useUser } from "../context/userContext";
+import { useDatabase } from "../context/databaseContext";
 
 export default function Home() {
   // Our custom hook to get context values
-  const { loadingUser, user } = useUser()
+  const { loadingUser, user } = useUser();
+  const { database, isLoading } = useDatabase();
 
-  const profile = { username: 'nextjs_user', message: 'Awesome!!' }
+  // const profile = { username: "nextjs_user", message: "Awesome!!" };
 
   useEffect(() => {
     if (!loadingUser) {
       // You know that the user is loaded: either logged in or out!
-      console.log(user)
+      console.log({ user });
     }
     // You also have your firebase app initialized
-  }, [loadingUser, user])
+  }, [loadingUser, user]);
 
-  const createUser = async () => {
-    const db = getFirestore()
-    await setDoc(doc(db, 'profile', profile.username), profile)
+  useEffect(() => {
+    if (!isLoading) {
+      console.log({ database });
+    }
+  }, [isLoading, database]);
 
-    alert('User created!!')
+  // const createUser = async () => {
+  //   const db = getFirestore();
+  //   await setDoc(doc(db, "profile", profile.username), profile);
+
+  //   alert("User created!!");
+  // };
+
+  if (!database) {
+    return (
+      <div className="container">
+        <main>
+          <h1 className="title">carregando...</h1>
+        </main>
+      </div>
+    );
   }
 
   return (
     <div className="container">
       <Head>
-        <title>Next.js w/ Firebase Client-Side</title>
+        <title>Manga Xpress App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className="title">Next.js w/ Firebase Client-Side</h1>
-        <p className="description">Fill in your credentials to get started</p>
+        <h1 className="title">Manga Xpress App</h1>
+        <p className="description">
+          Seus mangás preferidos na palma da sua mão!
+        </p>
+        <a href={database?.latest?.link} download>
+          <img
+            src="/img/manga-xpress-logo.png"
+            alt="Logo Mangá Xpress"
+            width={240}
+          />
+        </a>
+        <a href={database?.latest?.link} download>
+          Baixar a versão {database?.latest?.version}
+        </a>
+        {/* <p className="description">Fill in your credentials to get started</p>
 
         <p className="description">
           Cloud Firestore Security Rules write permissions are required for
@@ -47,7 +78,7 @@ export default function Home() {
         </p>
         <Link href={`/profile/${profile.username}`} passHref legacyBehavior>
           <a>Go to SSR Page</a>
-        </Link>
+        </Link> */}
       </main>
 
       <style jsx>{`
@@ -196,5 +227,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
