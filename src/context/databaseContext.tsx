@@ -1,16 +1,34 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { createFirebaseApp } from "../firebase/clientApp";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { createFirebaseApp } from "../../firebase/clientApp";
 import { getDatabase, ref, onValue } from "firebase/database";
 
-export const DatabaseContext = createContext();
+type LatestRelease = {
+  description: string;
+  force: boolean;
+  link: string;
+  version: string;
+};
+
+type Database = {
+  features: Record<string, boolean>;
+  latest: LatestRelease;
+};
+
+type DatabaseContext = {
+  database: Database | null;
+  isLoading: boolean;
+};
+
+export const DatabaseContext = createContext<DatabaseContext>({
+  database: null,
+  isLoading: false,
+});
 
 export default function DatabaseContextComp({ children }) {
   const [database, setDatabase] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Helpful, to update the UI accordingly.
 
   useEffect(() => {
-    // Listen authenticated user
     const app = createFirebaseApp();
     const db = getDatabase(app);
 
@@ -19,7 +37,6 @@ export default function DatabaseContextComp({ children }) {
         const dbRef = ref(db, "/");
         onValue(dbRef, (snapshot) => {
           const data = snapshot.val();
-          console.log("🚀 ~ onValue ~ data:", data);
           setDatabase(data);
         });
       } else setDatabase(null);
