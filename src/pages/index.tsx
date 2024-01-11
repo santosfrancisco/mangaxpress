@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useDatabase } from "../context/databaseContext";
 import styled from "styled-components";
 import { theme } from "../styles";
