@@ -1,10 +1,13 @@
 import React from "react";
 import { Row, Col, Hidden, Container } from "react-awesome-styled-grid";
 import { Button } from "../Button";
+import styled from "styled-components";
+
+const StyledContainer = styled(Container)``;
 
 export const Nav = () => {
   return (
-    <Container as="nav">
+    <StyledContainer as="nav">
       <Row style={{ height: 80 }}>
         <Col
           align={{ xs: "center", sm: "flex-start" }}
@@ -26,6 +29,6 @@ export const Nav = () => {
           </Col>
         </Hidden>
       </Row>
-    </Container>
+    </StyledContainer>
   );
 };

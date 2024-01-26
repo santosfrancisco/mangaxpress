@@ -11,6 +11,8 @@ import styled from "styled-components";
 import { theme } from "../../styles";
 import { Button } from "../Button";
 
+const StyledContainer = styled(Container)``;
+
 const Title = styled.h1`
   font-feature-settings: "liga" off;
   /* Display xl/Bold */
@@ -66,7 +68,7 @@ const ImageCircles = styled.img`
 
 export const Hero = () => {
   return (
-    <Container as="section">
+    <StyledContainer as="section">
       <Row
         justify="center"
         align="center"
@@ -118,6 +120,6 @@ export const Hero = () => {
           />
         </Col>
       </Row>
-    </Container>
+    </StyledContainer>
   );
 };
