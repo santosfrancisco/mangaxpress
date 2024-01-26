@@ -5,6 +5,8 @@ import { radius, theme } from "../../styles";
 import { Button } from "../Button";
 import { useDatabase } from "../../context/databaseContext";
 
+const StyledContainer = styled(Container)``;
+
 const StyledRow = styled(Row)`
   padding-top: 12px;
   padding-bottom: 12px;
@@ -18,12 +20,9 @@ const ImagesContainer = styled.div`
   display: flex;
   max-width: 100%;
   overflow: hidden;
-  /* transform: rotate(45deg); */
 
   ${(props) => config(props).media["sm"]`
       flex-direction: row;
-      // transform: none;
-
   `}
 `;
 
@@ -70,7 +69,7 @@ export const Download = () => {
   const { database, isLoading } = useDatabase();
 
   return (
-    <Container id="download" as="section">
+    <StyledContainer id="download" as="section">
       <StyledRow>
         <Col align="center" xs={4} sm={4}>
           <ImagesContainer>
@@ -117,6 +116,6 @@ export const Download = () => {
           </ActionContainer>
         </Col>
       </StyledRow>
-    </Container>
+    </StyledContainer>
   );
 };
