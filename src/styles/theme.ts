@@ -6,7 +6,7 @@ const base = {
   backgroundSecondary: colors.msuGreen[800],
   backgroundTertiary: colors.msuGreen[600],
   onBackground: colors.white[500],
-  primary: colors.goldenrod[500],
+  primary: colors.darkOrange[500],
   secondary: colors.skyDancer[400],
   info: colors.turquoise[500],
   error: colors.orangered[500],
